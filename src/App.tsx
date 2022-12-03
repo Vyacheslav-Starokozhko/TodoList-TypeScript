@@ -1,30 +1,25 @@
 import React from 'react';
 
 import './App.css';
-import {Header} from "./components/Header";
+import {Header} from "./components/Header/Header";
 import {TodoPanel} from "./components/TodoPanels/TodoPanel";
 import {TodoList} from "./components/TodoList/TodoList";
-
-let DEFAULT_TODO_LIST = [
-    {id: 1, name: 'tast 1', description: '', checked: false},
-    {id: 2, name: 'tast 2', description: '', checked: false},
-    {id: 3, name: 'tast 3', description: '', checked: true}
-];
-
+import {TodoProvider} from "./utils";
 
 export const App = () => {
-    const [todos, setTodos] = React.useState(DEFAULT_TODO_LIST);
-
-    const addTodo = ({name, description}: Omit<Todo, 'checked' | 'id'>) => {
-        setTodos([...todos, {id: todos[todos.length - 1].id + 1,description: description,name: name,checked: false}]);
-    }
 
     return (
-        <div className="App">
-            <Header todoCount={todos.length}/>
-            <TodoPanel addTodo={addTodo}/>
-            <TodoList todos={todos}/>
-        </div>
+        <TodoProvider>
+            <div className="App">
+                <div className="container">
+                    <Header/>
+                    <div className={'header_form'}>
+                        <TodoPanel mode='add'/>
+                    </div>
+                    <TodoList/>
+                </div>
+            </div>
+        </TodoProvider>
     );
 }
 
